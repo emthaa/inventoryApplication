@@ -1,0 +1,24 @@
+<!-- views/games.ejs -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Games</title>
+  </head>
+  <body>
+    <header>
+      <a href="/">Home</a>
+      <a href="/games">Games</a>
+      <a href="/genres">Genres</a>
+      <a href="/developers">Developers</a>
+
+    </header>
+    <h1>Selected Games</h1>
+    <div class="game-list">
+      <% games.forEach(game => { %>
+        <a href="/games/<%= game[0].id %>"><%= game[0].name %></a>
+      <% }); %>
+    </div>
+  </body>
+</html>
+
+<p>games</p>

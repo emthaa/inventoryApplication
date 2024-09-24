@@ -1,0 +1,31 @@
+<header>
+  <a href="/">Home</a>
+  <a href="/games">Games</a>
+  <a href="/genres">Genres</a>
+  <a href="/developers">Developers</a>
+</header>
+
+<form action="/games/add" method="post">
+  <label for="name">Game Name</label>
+  <input
+    name="gameName"
+    id="name"
+    type="text"
+    placeholder="Enter game name"
+  /><br />
+
+  <% genres.forEach(genre => { %>
+  <input type="checkbox" name="gameGenresIds" value="<%= genre.id %>" />
+  <label for="Genre<%= genre.id %>"><%= genre.name %></label><br />
+  <% }); %>
+
+  <label for="gameDeveloper">Developer</label>
+  <select name="gameDeveloperId" id="gameDeveloper">
+    <% developers.forEach(developer => { %>
+    <option value="<%= developer.id %>"><%= developer.name %></option>
+    <% }); %>
+  </select>
+
+  <br /><br />
+  <button type="submit">Add</button>
+</form>

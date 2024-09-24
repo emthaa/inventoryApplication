@@ -1,0 +1,13 @@
+<header>
+  <a href="/">Home</a>
+  <a href="/games">Games</a>
+  <a href="/genres">Genres</a>
+  <a href="/developers">Developers</a>
+  <a href="/developers/add">Add Developer</a>
+</header>
+
+<h1>All Developers</h1>
+      <% developers.forEach(developer => { %>
+      <a href="/developers/<%=developer.id%>"><%= developer.name %></a>
+      <% }); %>
+<p>genres</p>

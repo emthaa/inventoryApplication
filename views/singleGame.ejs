@@ -1,0 +1,15 @@
+<header>
+  <a href="/">Home</a>
+  <a href="/games">Games</a>
+  <a href="/genres">Genres</a>
+  <a href="/developers">Developers</a>
+</header>
+<h1><%= game[0].name %></h1>
+<h1>Genres</h1>
+<% game_genre.forEach(genre => { %>
+  <p ><%= genre%></p>
+<% }); %>
+<h1>Developer</h1>
+<% game_developer.forEach(developer => { %>
+  <p ><%= developer%></p>
+<% }); %>
