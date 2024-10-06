@@ -10,12 +10,23 @@
       <a href="/games">Games</a>
       <a href="/genres">Genres</a>
       <a href="/developers">Developers</a>
-
     </header>
     <h1>Selected Games</h1>
+    <% if (getBy == "developers") { %>
+    <form action="<%= developerUrl %>/delete" method="POST">
+      <button type="submit">Delete Developer</button>
+      <p>WARNING - THIS WILL DELETE ALL GAMES ASSOCIATED WITH THIS DEVELOPER</p>
+    </form>
+    <% } else { %>
+    <form action="<%= genreUrl %>/delete" method="POST">
+      <button type="submit">Delete Genre</button>
+      <p>WARNING - THIS WILL DELETE ALL GAMES ASSOCIATED WITH THIS GENRE</p>
+    </form>
+    <% } %>
+
     <div class="game-list">
       <% games.forEach(game => { %>
-        <a href="/games/<%= game[0].id %>"><%= game[0].name %></a>
+      <a href="/games/<%= game[0].id %>"><%= game[0].name %></a>
       <% }); %>
     </div>
   </body>

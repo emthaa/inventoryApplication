@@ -6,11 +6,9 @@ async function getGames() {
 }
 
 async function getSingleGame(id) {
-  const { rows } = await pool.query(`SELECT * FROM games WHERE id=${id}`);
+  const { rows } = await pool.query(`SELECT * FROM games WHERE id = $1`, [id]);
   return rows;
 }
-// SELECT games.name FROM games INNER JOIN genres ON games.id = genres.id WHERE genres.name = 'Adventure';
-// SELECT games.name FROM games INNER JOIN game_genres ON games.id = game_genres.game_id;
 
 async function getGenres() {
   const { rows } = await pool.query("SELECT * FROM genres");
@@ -18,15 +16,19 @@ async function getGenres() {
 }
 
 async function getSingleGenre(genre_id) {
-  const { rows } = await pool.query(`SELECT * FROM genres WHERE id=${genre_id}`);
+  const { rows } = await pool.query(`SELECT * FROM genres WHERE id = $1`, [
+    genre_id,
+  ]);
   return rows;
 }
 
-async function getGameGenresIds(game_id){
-  const { rows } = await pool.query(`SELECT * FROM game_genres WHERE game_id=${game_id}`);
+async function getGameGenresIds(game_id) {
+  const { rows } = await pool.query(
+    `SELECT * FROM game_genres WHERE game_id = $1`,
+    [game_id]
+  );
   return rows;
 }
-
 
 async function getGameGenres(game_id) {
   try {
@@ -40,7 +42,7 @@ async function getGameGenres(game_id) {
 
     return genreNames;
   } catch (error) {
-    console.error('Error fetching game genres:', error);
+    console.error("Error fetching game genres:", error);
     return [];
   }
 }
@@ -51,12 +53,17 @@ async function getDevelopers() {
 }
 
 async function getSingleDeveloper(developer_id) {
-  const { rows } = await pool.query(`SELECT * FROM developers WHERE id=${developer_id}`);
+  const { rows } = await pool.query(`SELECT * FROM developers WHERE id = $1`, [
+    developer_id,
+  ]);
   return rows;
 }
 
-async function getGameDevelopersIds(game_id){
-  const { rows } = await pool.query(`SELECT * FROM game_developers WHERE game_id=${game_id}`);
+async function getGameDevelopersIds(game_id) {
+  const { rows } = await pool.query(
+    `SELECT * FROM game_developers WHERE game_id = $1`,
+    [game_id]
+  );
   return rows;
 }
 
@@ -66,77 +73,136 @@ async function getGameDevelopers(game_id) {
     const developerNames = [];
 
     for (const gameDevelopersId of gameDevelopersIds) {
-      const developerData = await getSingleDeveloper(gameDevelopersId.developer_id);
+      const developerData = await getSingleDeveloper(
+        gameDevelopersId.developer_id
+      );
       developerNames.push(developerData[0].name);
     }
 
     return developerNames;
   } catch (error) {
-    console.error('Error fetching game developers:', error);
+    console.error("Error fetching game developers:", error);
     return [];
   }
 }
 
-async function getDeveloperGames(developer_id){
-  let gameIds = [];
-  let games = [];
-  
-  const { rows } = await pool.query(`SELECT * FROM game_developers WHERE developer_id=${developer_id}`);
-  
-  rows.forEach((row) => {
-    gameIds.push(row.game_id);
-  });
-  
-  games = await Promise.all(gameIds.map(async (gameId) => {
-    return await getSingleGame(gameId); 
-  }));
+async function getDeveloperGames(developer_id) {
+  const { rows } = await pool.query(
+    `SELECT * FROM game_developers WHERE developer_id = $1`,
+    [developer_id]
+  );
+  const gameIds = rows.map((row) => row.game_id);
+
+  const games = await Promise.all(
+    gameIds.map(async (gameId) => {
+      return await getSingleGame(gameId);
+    })
+  );
   return games;
 }
 
-async function getGenreGames(genre_id){
-  let gameIds = [];
-  let games = [];
-  
-  const { rows } = await pool.query(`SELECT * FROM game_genres WHERE genre_id=${genre_id}`);
-  
-  rows.forEach((row) => {
-    gameIds.push(row.game_id);
-  });
-  
-  games = await Promise.all(gameIds.map(async (gameId) => {
-    return await getSingleGame(gameId); 
-  }));
-  console.log(games[0])
+async function getGenreGames(genre_id) {
+  const { rows } = await pool.query(
+    `SELECT * FROM game_genres WHERE genre_id = $1`,
+    [genre_id]
+  );
+  const gameIds = rows.map((row) => row.game_id);
+
+  const games = await Promise.all(
+    gameIds.map(async (gameId) => {
+      return await getSingleGame(gameId);
+    })
+  );
+  console.log(games[0]);
   return games;
 }
 
-async function addGenre(name){
-  const { rows } = await pool.query(`INSERT INTO genres (name) VALUES ('${name}');`);
-  return rows
+async function addGenre(name) {
+  const { rows } = await pool.query(
+    `INSERT INTO genres (name) VALUES ($1) RETURNING *;`,
+    [name]
+  );
+  return rows;
 }
 
-async function addDeveloper(name){
-  const { rows } = await pool.query(`INSERT INTO developers (name) VALUES ('${name}');`);
-  return rows
+async function addDeveloper(name) {
+  const { rows } = await pool.query(
+    `INSERT INTO developers (name) VALUES ($1) RETURNING *;`,
+    [name]
+  );
+  return rows;
 }
 
-async function addGame(name){
-  const { rows } = await pool.query(`INSERT INTO games (name) VALUES ('${name}');`);
-  return rows
+async function addGame(name) {
+  const { rows } = await pool.query(
+    `INSERT INTO games (name) VALUES ($1) RETURNING *;`,
+    [name]
+  );
+  return rows;
 }
 
-async function getLatestGameEntry(){
+async function getLatestGameEntry() {
   const { rows } = await pool.query(`SELECT MAX(id) AS id FROM games;`);
-  return rows
+  return rows;
 }
 
-async function linkGameToGenre(game_id,genre_id){
-  await pool.query(`INSERT INTO game_genres (game_id, genre_id) VALUES (${game_id}, ${genre_id})`)
+async function linkGameToGenre(game_id, genre_id) {
+  await pool.query(
+    `INSERT INTO game_genres (game_id, genre_id) VALUES ($1, $2);`,
+    [game_id, genre_id]
+  );
 }
 
-async function linkGameToDeveloper(game_id,developer_id){
-  await pool.query(`INSERT INTO game_developers (game_id, developer_id) VALUES (${game_id}, ${developer_id})`)
+async function linkGameToDeveloper(game_id, developer_id) {
+  await pool.query(
+    `INSERT INTO game_developers (game_id, developer_id) VALUES ($1, $2);`,
+    [game_id, developer_id]
+  );
 }
+
+async function editGameEntry(game_id, game_name, genres_id, developer_id) {
+  await pool.query(`UPDATE games SET name = $1 WHERE id = $2;`, [
+    game_name,
+    game_id,
+  ]);
+
+  await pool.query(`DELETE FROM game_genres WHERE game_id = $1;`, [game_id]);
+
+  for (const genre_id of genres_id) {
+    await linkGameToGenre(game_id, genre_id);
+  }
+
+  await pool.query(
+    `UPDATE game_developers SET developer_id = $1 WHERE game_id = $2;`,
+    [developer_id, game_id]
+  );
+}
+
+async function deleteGame(game_id) {
+  await pool.query(`DELETE FROM game_genres WHERE game_id = $1;`, [game_id]);
+  await pool.query(`DELETE FROM game_developers WHERE game_id = $1;`, [
+    game_id,
+  ]);
+  await pool.query(`DELETE FROM games WHERE id = $1;`, [game_id]);
+}
+
+async function deleteDeveloper(developer_id) {
+  await pool.query(`DELETE FROM game_developers WHERE developer_id = $1;`, [
+    developer_id,
+  ]);
+  await pool.query(`DELETE FROM developers WHERE id = $1;`, [developer_id]);
+}
+
+async function deleteGenre(genre_id) {
+  await pool.query(`DELETE FROM game_genres WHERE genre_id = $1;`, [genre_id]);
+  await pool.query(`DELETE FROM genres WHERE id = $1;`, [genre_id]);
+}
+
+// deleting philosophy
+// delete game -> nothing happens                    V
+// delete developer -> delete games
+// delete genres -> delete games
+// not a good system, but should be easy to make
 
 module.exports = {
   getGames,
@@ -152,6 +218,11 @@ module.exports = {
   addGame,
   getLatestGameEntry,
   linkGameToGenre,
-  linkGameToDeveloper
-
+  linkGameToDeveloper,
+  getGameGenresIds,
+  getGameDevelopersIds,
+  editGameEntry,
+  deleteGame,
+  deleteDeveloper,
+  deleteGenre,
 };

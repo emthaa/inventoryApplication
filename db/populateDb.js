@@ -4,6 +4,12 @@ const createTables = async () => {
   try {
     const client = await pool.connect();
 
+    await client.query("DROP TABLE IF EXISTS game_genres;");
+    await client.query("DROP TABLE IF EXISTS game_developers;");
+    await client.query("DROP TABLE IF EXISTS games;");
+    await client.query("DROP TABLE IF EXISTS genres;");
+    await client.query("DROP TABLE IF EXISTS developers;");
+
     // Create Genres table if it doesn't exist
     const createGenresTable = `
       CREATE TABLE IF NOT EXISTS genres (
@@ -54,7 +60,7 @@ const createTables = async () => {
     client.release();
     console.log("Tables created successfully!");
   } catch (err) {
-    console.error('Error creating tables', err.stack);
+    console.error("Error creating tables", err.stack);
   }
 };
 
@@ -137,7 +143,7 @@ const insertData = async () => {
     client.release();
     console.log("Data inserted successfully!");
   } catch (err) {
-    console.error('Error executing query', err.stack);
+    console.error("Error executing query", err.stack);
   }
 };
 
