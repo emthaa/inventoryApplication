@@ -18,7 +18,7 @@
       <h1>Selected Games</h1>
       <% if (getBy == "developers") { %>
       <form class="deletion-form" action="<%= developerUrl %>/delete" method="POST">
-        <button type="submit">Delete Developer</button>
+        <button class="form-submit-button" type="submit">Delete Developer</button>
         <p class="deletion-warning" class="form-submit-button">
           WARNING - THIS WILL DELETE ALL GAMES ASSOCIATED WITH THIS DEVELOPER
         </p>
