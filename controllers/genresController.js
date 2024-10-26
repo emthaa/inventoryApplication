@@ -13,7 +13,6 @@ async function genresRouterGet(req, res) {
 async function singleGenreRouterGet(req, res) {
   try {
     const data = await db.getGenreGames(req.params.id);
-    console.log(data);
     const genreUrl = req.originalUrl;
     res.render("gameSelection", {
       games: data,

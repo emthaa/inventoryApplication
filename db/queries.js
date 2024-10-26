@@ -113,7 +113,6 @@ async function getGenreGames(genre_id) {
       return await getSingleGame(gameId);
     })
   );
-  console.log(games[0]);
   return games;
 }
 
@@ -197,12 +196,6 @@ async function deleteGenre(genre_id) {
   await pool.query(`DELETE FROM game_genres WHERE genre_id = $1;`, [genre_id]);
   await pool.query(`DELETE FROM genres WHERE id = $1;`, [genre_id]);
 }
-
-// deleting philosophy
-// delete game -> nothing happens                    V
-// delete developer -> delete games
-// delete genres -> delete games
-// not a good system, but should be easy to make
 
 module.exports = {
   getGames,

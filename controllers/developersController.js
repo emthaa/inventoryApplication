@@ -3,7 +3,6 @@ const db = require("../db/queries");
 async function developersRouterGet(req, res) {
   try {
     const data = await db.getDevelopers();
-    console.log(data);
     res.render("developers", { developers: data });
   } catch (err) {
     console.error("Error:", err);
@@ -15,7 +14,6 @@ async function singleDeveloperRouterGet(req, res) {
   try {
     const data = await db.getDeveloperGames(req.params.id);
     const developerUrl = req.originalUrl;
-    console.log(data);
     res.render("gameSelection", {
       games: data,
       getBy: "developers",
@@ -39,7 +37,6 @@ async function addDeveloperRouterGet(req, res) {
 async function addDeveloperRouterPost(req, res) {
   try {
     const { developerName } = req.body;
-    console.log(developerName);
     await db.addDeveloper(developerName);
     res.redirect("/developers");
   } catch (err) {
@@ -58,7 +55,6 @@ async function deleteDeveloperRouterPost(req, res) {
     }
 
     await db.deleteDeveloper(developerId);
-    console.log(req.params.id);
     res.redirect("/developers");
   } catch (err) {
     console.error("Error adding developer:", err);

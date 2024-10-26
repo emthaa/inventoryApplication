@@ -1,4 +1,5 @@
 const db = require("../db/queries");
+const { body, validationResult } = require("express-validator");
 
 async function gamesRouterGet(req, res) {
   try {
@@ -32,7 +33,6 @@ async function addGameRouterGet(req, res) {
   try {
     const developerData = await db.getDevelopers();
     const genresData = await db.getGenres();
-    console.log(developerData);
     res.render("addGame", { developers: developerData, genres: genresData });
   } catch (err) {
     console.error("Error:", err);
@@ -47,8 +47,6 @@ async function addGameRouterPost(req, res) {
     await db.addGame(gameName);
     const tempGameId = await db.getLatestGameEntry();
     const gameId = tempGameId[0].id;
-
-    console.log(gameName, gameGenresIds, gameDeveloperId, gameId);
 
     for (const genreId of gameGenresIds) {
       await db.linkGameToGenre(gameId, genreId);
@@ -102,11 +100,7 @@ async function editGameRouterPost(req, res) {
 
 async function deleteGameRouterPost(req, res) {
   try {
-    // query to delete game
-    // delete all game connections to developers and genres
-
     const gameId = req.params.id;
-    console.log(gameId);
     await db.deleteGame(gameId);
     res.redirect("/games");
   } catch (err) {

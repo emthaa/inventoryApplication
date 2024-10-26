@@ -10,7 +10,6 @@ const createTables = async () => {
     await client.query("DROP TABLE IF EXISTS genres;");
     await client.query("DROP TABLE IF EXISTS developers;");
 
-    // Create Genres table if it doesn't exist
     const createGenresTable = `
       CREATE TABLE IF NOT EXISTS genres (
         id SERIAL PRIMARY KEY,
@@ -19,7 +18,6 @@ const createTables = async () => {
     `;
     await client.query(createGenresTable);
 
-    // Create Games table if it doesn't exist
     const createGamesTable = `
       CREATE TABLE IF NOT EXISTS games (
         id SERIAL PRIMARY KEY,
@@ -28,7 +26,6 @@ const createTables = async () => {
     `;
     await client.query(createGamesTable);
 
-    // Create Developers table if it doesn't exist
     const createDevelopersTable = `
       CREATE TABLE IF NOT EXISTS developers (
         id SERIAL PRIMARY KEY,
@@ -37,7 +34,6 @@ const createTables = async () => {
     `;
     await client.query(createDevelopersTable);
 
-    // Create GameGenres table if it doesn't exist (junction table)
     const createGameGenresTable = `
       CREATE TABLE IF NOT EXISTS game_genres (
         game_id INT REFERENCES games(id),
@@ -47,7 +43,6 @@ const createTables = async () => {
     `;
     await client.query(createGameGenresTable);
 
-    // Create GameDevelopers table if it doesn't exist (junction table)
     const createGameDevelopersTable = `
       CREATE TABLE IF NOT EXISTS game_developers (
         game_id INT REFERENCES games(id),
@@ -68,7 +63,6 @@ const insertData = async () => {
   try {
     const client = await pool.connect();
 
-    // Insert into Games table (no developer column)
     const gameQuery = `
       INSERT INTO games (id, name)
       VALUES
@@ -82,7 +76,6 @@ const insertData = async () => {
     `;
     const gameResult = await client.query(gameQuery);
 
-    // Insert into Genres table
     const genresQuery = `
       INSERT INTO genres (id, name)
       VALUES
@@ -98,7 +91,6 @@ const insertData = async () => {
     `;
     const genresResult = await client.query(genresQuery);
 
-    // Insert into Developers table
     const developersQuery = `
       INSERT INTO developers (id, name)
       VALUES
@@ -112,7 +104,6 @@ const insertData = async () => {
     `;
     const developersResult = await client.query(developersQuery);
 
-    // Insert into GameGenres (junction table)
     const gameGenresQuery = `
       INSERT INTO game_genres (game_id, genre_id)
       VALUES
@@ -126,7 +117,6 @@ const insertData = async () => {
     `;
     const gameGenresResult = await client.query(gameGenresQuery);
 
-    // Insert into GameDevelopers (junction table)
     const gameDevelopersQuery = `
       INSERT INTO game_developers (game_id, developer_id)
       VALUES
@@ -147,7 +137,6 @@ const insertData = async () => {
   }
 };
 
-// First, create the tables, and then insert the data
 createTables().then(() => {
   insertData();
 });
