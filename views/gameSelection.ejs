@@ -1,35 +1,42 @@
-<!-- views/games.ejs -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="../style.css" />
+
     <title>Games</title>
   </head>
   <body>
     <header>
-      <a href="/">Home</a>
-      <a href="/games">Games</a>
-      <a href="/genres">Genres</a>
-      <a href="/developers">Developers</a>
+      <a class="headerLinks" href="/">Home</a>
+      <a class="headerLinks" href="/games">Games</a>
+      <a class="headerLinks" href="/genres">Genres</a>
+      <a class="headerLinks" href="/developers">Developers</a>
     </header>
-    <h1>Selected Games</h1>
-    <% if (getBy == "developers") { %>
-    <form action="<%= developerUrl %>/delete" method="POST">
-      <button type="submit">Delete Developer</button>
-      <p>WARNING - THIS WILL DELETE ALL GAMES ASSOCIATED WITH THIS DEVELOPER</p>
-    </form>
-    <% } else { %>
-    <form action="<%= genreUrl %>/delete" method="POST">
-      <button type="submit">Delete Genre</button>
-      <p>WARNING - THIS WILL DELETE ALL GAMES ASSOCIATED WITH THIS GENRE</p>
-    </form>
-    <% } %>
+    <main>
+      <h1>Selected Games</h1>
+      <% if (getBy == "developers") { %>
+      <form class="deletion-form" action="<%= developerUrl %>/delete" method="POST">
+        <button type="submit">Delete Developer</button>
+        <p class="deletion-warning" class="form-submit-button">
+          WARNING - THIS WILL DELETE ALL GAMES ASSOCIATED WITH THIS DEVELOPER
+        </p>
+      </form>
+      <% } else { %>
+      <form class="deletion-form" action="<%= genreUrl %>/delete" method="POST">
+        <button type="submit" class="form-submit-button">Delete Genre</button>
+        <p class="deletion-warning">
+          WARNING - THIS WILL DELETE ALL GAMES ASSOCIATED WITH THIS GENRE
+        </p>
+      </form>
+      <% } %>
 
-    <div class="game-list">
-      <% games.forEach(game => { %>
-      <a href="/games/<%= game[0].id %>"><%= game[0].name %></a>
-      <% }); %>
-    </div>
+      <div class="item-list">
+        <% games.forEach(game => { %>
+        <a class="cardButton" href="/games/<%= game[0].id %>"><%= game[0].name %></a>
+        <% }); %>
+      </div>
+    </main>
   </body>
 </html>
-
-<p>games</p>

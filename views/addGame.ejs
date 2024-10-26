@@ -1,31 +1,51 @@
-<header>
-  <a href="/">Home</a>
-  <a href="/games">Games</a>
-  <a href="/genres">Genres</a>
-  <a href="/developers">Developers</a>
-</header>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="../style.css" />
 
-<form action="/games/add" method="post">
-  <label for="name">Game Name</label>
-  <input
-    name="gameName"
-    id="name"
-    type="text"
-    placeholder="Enter game name"
-  /><br />
-
-  <% genres.forEach(genre => { %>
-  <input type="checkbox" name="gameGenresIds" value="<%= genre.id %>" />
-  <label for="Genre<%= genre.id %>"><%= genre.name %></label><br />
-  <% }); %>
-
-  <label for="gameDeveloper">Developer</label>
-  <select name="gameDeveloperId" id="gameDeveloper">
-    <% developers.forEach(developer => { %>
-    <option value="<%= developer.id %>"><%= developer.name %></option>
-    <% }); %>
-  </select>
-
-  <br /><br />
-  <button type="submit">Add</button>
-</form>
+    <title>Add a Game</title>
+  </head>
+  <body>
+    <header>
+      <a class="headerLinks" href="/">Home</a>
+      <a class="headerLinks" href="/games">Games</a>
+      <a class="headerLinks" href="/genres">Genres</a>
+      <a class="headerLinks" href="/developers">Developers</a>
+    </header>
+    <main>
+      <form class="add-item-form" action="/games/add" method="post">
+        <div class="add-item-title-wrapper">
+        <label class="add-item-title" for="name">Game Name</label>
+        <input
+          name="gameName"
+          id="name"
+          class="add-item-box"
+          type="text"
+          placeholder="Enter game name"
+        /><br />
+      </div>
+      <div class="selection-boxes-wrapper">
+        <% genres.forEach(genre => { %>
+        <div class="selection-boxes">
+          <input type="checkbox" name="gameGenresIds" value="<%= genre.id %>" />
+          <label for="Genre<%= genre.id %>"><%= genre.name %></label><br />
+        </div>
+        <% }); %>
+      </div>
+        <div class="add-item-bottom">
+          <div class="add-developer-wrapper">
+        <label class="add-item-title" for="gameDeveloper">Developer</label>
+        <select class="add-item-box" name="gameDeveloperId" id="gameDeveloper">
+          <% developers.forEach(developer => { %>
+          <option value="<%= developer.id %>"><%= developer.name %></option>
+          <% }); %>
+        </select>
+      </div>
+        <button type="submit" class="form-submit-button">Add</button>
+      </div>
+      </form>
+    </main>
+  </body>
+</html>

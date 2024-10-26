@@ -1,5 +1,32 @@
-<form action="/genres/add" method="post">
-    <label for="name">Genre Name</label>
-    <input name="genreName" id="name" type="text" placeholder="Enter genre name">
-    <button type="submit">Add</button>
-</form>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="../style.css" />
+
+    <title>Add a Genre</title>
+  </head>
+  <body>
+    <header>
+      <a class="headerLinks" href="/">Home</a>
+      <a class="headerLinks" href="/games">Games</a>
+      <a class="headerLinks" href="/genres">Genres</a>
+      <a class="headerLinks" href="/developers">Developers</a>
+    </header>
+    <main>
+      <form class="add-item-form" action="/genres/add" method="post">
+        <label class="add-item-title" for="name">Genre Name</label>
+        <input
+          name="genreName"
+          id="name"
+          class="add-item-box"
+          type="text"
+          placeholder="Enter genre name"
+        />
+        <br>
+        <button type="submit" class="form-submit-button">Add</button>
+      </form>
+    </main>
+  </body>
+</html>

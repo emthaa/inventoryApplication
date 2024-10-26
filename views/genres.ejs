@@ -1,13 +1,27 @@
-<header>
-  <a href="/">Home</a>
-  <a href="/games">Games</a>
-  <a href="/genres">Genres</a>
-  <a href="/developers">Developers</a>
-  <a href="/genres/add">Add Genre</a>
-</header>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
 
-<h1>All Genres</h1>
+    <title>Genres</title>
+  </head>
+  <body>
+    <header>
+      <a class="headerLinks" href="/">Home</a>
+      <a class="headerLinks" href="/games">Games</a>
+      <a class="headerLinks" href="/genres">Genres</a>
+      <a class="headerLinks" href="/developers">Developers</a>
+    </header>
+    <main>
+      <h1>All Genres</h1>
+      <a class="add-item-button" href="/genres/add">Add Genre</a>
+      <div class="item-list">
       <% genres.forEach(genre => { %>
-      <a href="/genres/<%= genre.id%>"><%= genre.name %></a>
+      <a class="cardButton" href="/genres/<%= genre.id%>"><%= genre.name %></a>
       <% }); %>
-<p>genres</p>
+    </div>
+    </main>
+  </body>
+</html>

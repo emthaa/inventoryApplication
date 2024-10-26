@@ -1,24 +1,26 @@
-<!-- views/games.ejs -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
     <title>Games</title>
   </head>
   <body>
     <header>
-      <a href="/">Home</a>
-      <a href="/games">Games</a>
-      <a href="/genres">Genres</a>
-      <a href="/developers">Developers</a>
-      <a href="/games/add">Add Game</a>
+      <a class="headerLinks" href="/">Home</a>
+      <a class="headerLinks" href="/games">Games</a>
+      <a class="headerLinks" href="/genres">Genres</a>
+      <a class="headerLinks" href="/developers">Developers</a>
     </header>
-    <h1>Games List</h1>
-    <div class="game-list">
-      <% games.forEach(game => { %>
-        <a href="/games/<%= game.id %>"><%= game.name %></a>
-      <% }); %>
-    </div>
+    <main>
+      <h1>All Games</h1>
+      <a class="add-item-button" href="/games/add">Add Game</a>
+      <div class="item-list">
+        <% games.forEach(game => { %>
+        <a class="cardButton" href="/games/<%= game.id %>"><%= game.name %></a>
+        <% }); %>
+      </div>
+    </main>
   </body>
 </html>
-
-<p>games</p>

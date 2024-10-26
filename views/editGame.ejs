@@ -1,37 +1,49 @@
-<header>
-  <a href="/">Home</a>
-  <a href="/games">Games</a>
-  <a href="/genres">Genres</a>
-  <a href="/developers">Developers</a>
-</header>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="../../style.css" />
 
-<form action="/games/<%= game[0].id %>/edit" method="post">
-  <label for="name">Game Name</label>
-  <input
-    name="gameName"
-    id="name"
-    type="text"
-    placeholder="Enter game name"
-    value="<%= game[0].name %>"
-  /><br />
+    <title>Game Edit</title>
+  </head>
+  <body>
+    <header>
+      <a class="headerLinks" href="/">Home</a>
+      <a class="headerLinks" href="/games">Games</a>
+      <a class="headerLinks" href="/genres">Genres</a>
+      <a class="headerLinks" href="/developers">Developers</a>
+    </header>
+    <main>
+      <form action="/games/<%= game[0].id %>/edit" method="post">
+        <label for="name">Game Name</label>
+        <input
+          name="gameName"
+          id="name"
+          type="text"
+          placeholder="Enter game name"
+          value="<%= game[0].name %>"
+        /><br />
 
-  <% genres.forEach(genre => { 
-      const isChecked = gameGenresIds.some(gameGenre => gameGenre.genre_id == genre.id); 
-  %>
-    <input type="checkbox" name="gameGenresIds" value="<%= genre.id %>" <%= isChecked ? 'checked' : '' %> />
-    <label for="Genre<%= genre.id %>"><%= genre.name %></label><br />
-  <% }); %>
+        <% genres.forEach(genre => { const isChecked =
+        gameGenresIds.some(gameGenre => gameGenre.genre_id == genre.id); %>
+        <input type="checkbox" name="gameGenresIds" value="<%= genre.id %>" <%=
+        isChecked ? 'checked' : '' %> />
+        <label for="Genre<%= genre.id %>"><%= genre.name %></label><br />
+        <% }); %>
 
-  <label for="gameDeveloper">Developer</label>
-  <select name="gameDeveloperId" id="gameDeveloper">
-    <% developers.forEach(developer => { 
-      const isSelected = developer.id === gameDeveloperIds[0].developer_id;
-    %>
-      <option value="<%= developer.id %>" <%= isSelected ? 'selected' : '' %> ><%= developer.name %></option>
-    <% }); %>
-  </select>
+        <label for="gameDeveloper">Developer</label>
+        <select name="gameDeveloperId" id="gameDeveloper">
+          <% developers.forEach(developer => { const isSelected = developer.id
+          === gameDeveloperIds[0].developer_id; %> <option value="<%=
+          developer.id %>" <%= isSelected ? 'selected' : '' %> ><%=
+          developer.name %> <% }); %>
+        </select>
 
-  <br /><br />
-  <button type="submit">Update</button>
-  <a href="/games">Cancel</a>
-</form>
+        <br /><br />
+        <button type="submit">Update</button>
+        <a href="/games">Cancel</a>
+      </form>
+    </main>
+  </body>
+</html>

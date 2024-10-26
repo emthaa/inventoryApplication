@@ -1,20 +1,34 @@
-<header>
-  <a href="/">Home</a>
-  <a href="/games">Games</a>
-  <a href="/genres">Genres</a>
-  <a href="/developers">Developers</a>
-</header>
-<h1><%= game[0].name %></h1>
-<h1>Genres</h1>
-<% game_genre.forEach(genre => { %>
-<p><%= genre%></p>
-<% }); %>
-<h1>Developer</h1>
-<% game_developer.forEach(developer => { %>
-<p><%= developer%></p>
-<% }); %>
-<a href="/games/<%= game[0].id %>/edit">Edit Game</a>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="../style.css" />
 
-<form action="/games/<%= game[0].id %>/delete" method="POST">
-  <button type="submit">Delete Game</button>
-</form>
+    <title>Games</title>
+  </head>
+  <body>
+    <header>
+      <a class="headerLinks" href="/">Home</a>
+      <a class="headerLinks" href="/games">Games</a>
+      <a class="headerLinks" href="/genres">Genres</a>
+      <a class="headerLinks" href="/developers">Developers</a>
+    </header>
+    <main>
+      <h1><%= game[0].name %></h1>
+      <h1>Genres</h1>
+      <% game_genre.forEach(genre => { %>
+      <p class="no-link-box"><%= genre%></p>
+      <% }); %>
+      <h1>Developer</h1>
+      <% game_developer.forEach(developer => { %>
+      <p class="no-link-box"><%= developer%></p>
+      <% }); %>
+      <a href="/games/<%= game[0].id %>/edit" class="form-submit-button" id="edit-game-button">Edit Game</a>
+
+      <form action="/games/<%= game[0].id %>/delete" method="POST">
+        <button type="submit" class="form-submit-button">Delete Game</button>
+      </form>
+    </main>
+  </body>
+</html>
