@@ -1,4 +1,5 @@
 const db = require("../db/queries");
+const { validationResult } = require("express-validator");
 
 async function genresRouterGet(req, res) {
   try {
@@ -27,7 +28,7 @@ async function singleGenreRouterGet(req, res) {
 
 async function addGenreRouterGet(req, res) {
   try {
-    res.render("addGenre");
+    res.render("addGenre", { errors: [] });
   } catch (err) {
     console.error("Error:", err);
     res.status(500).send("Internal Server Error");
@@ -35,6 +36,13 @@ async function addGenreRouterGet(req, res) {
 }
 
 async function addGenreRouterPost(req, res) {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).render("addGenre", {
+      errors: errors.array(),
+    });
+  }
+
   try {
     const { genreName } = req.body;
     await db.addGenre(genreName);

@@ -17,34 +17,52 @@
     <main>
       <form class="add-item-form" action="/games/add" method="post">
         <div class="add-item-title-wrapper">
-        <label class="add-item-title" for="name">Game Name</label>
-        <input
-          name="gameName"
-          id="name"
-          class="add-item-box"
-          type="text"
-          placeholder="Enter game name"
-        /><br />
-      </div>
-      <div class="selection-boxes-wrapper">
-        <% genres.forEach(genre => { %>
-        <div class="selection-boxes">
-          <input type="checkbox" name="gameGenresIds" value="<%= genre.id %>" />
-          <label for="Genre<%= genre.id %>"><%= genre.name %></label><br />
+          <label class="add-item-title" for="name">Game Name</label>
+          <input
+            name="gameName"
+            id="name"
+            class="add-item-box"
+            type="text"
+            placeholder="Enter game name"
+          />
         </div>
-        <% }); %>
-      </div>
+        <br />
+        <div class="selection-boxes-wrapper">
+          <% genres.forEach(genre => { %>
+          <div class="selection-boxes">
+            <input
+              type="checkbox"
+              name="gameGenresIds"
+              value="<%= genre.id %>"
+            />
+            <label for="Genre<%= genre.id %>"><%= genre.name %></label><br />
+          </div>
+          <% }); %>
+        </div>
         <div class="add-item-bottom">
           <div class="add-developer-wrapper">
-        <label class="add-item-title" for="gameDeveloper">Developer</label>
-        <select class="add-item-box" name="gameDeveloperId" id="gameDeveloper">
-          <% developers.forEach(developer => { %>
-          <option value="<%= developer.id %>"><%= developer.name %></option>
-          <% }); %>
-        </select>
-      </div>
-        <button type="submit"  class="form-submit-button big-submit-button">Add</button>
-      </div>
+            <label class="add-item-title" for="gameDeveloper">Developer</label>
+            <select
+              class="add-item-box"
+              name="gameDeveloperId"
+              id="gameDeveloper"
+            >
+              <% developers.forEach(developer => { %>
+              <option value="<%= developer.id %>"><%= developer.name %></option>
+              <% }); %>
+            </select>
+          </div>
+          <button type="submit" class="form-submit-button big-submit-button">
+            Add
+          </button>
+          <% if (errors && errors.length > 0) { %>
+          <ul>
+            <% errors.forEach(function(error) { %>
+            <li class="error-message"><%= error.msg %></li>
+            <% }) %>
+          </ul>
+          <% } %>
+        </div>
       </form>
     </main>
   </body>

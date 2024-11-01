@@ -33,7 +33,11 @@ async function addGameRouterGet(req, res) {
   try {
     const developerData = await db.getDevelopers();
     const genresData = await db.getGenres();
-    res.render("addGame", { developers: developerData, genres: genresData });
+    res.render("addGame", {
+      developers: developerData,
+      genres: genresData,
+      errors: [],
+    });
   } catch (err) {
     console.error("Error:", err);
     res.status(500).send("Internal Server Error");
@@ -41,9 +45,19 @@ async function addGameRouterGet(req, res) {
 }
 
 async function addGameRouterPost(req, res) {
+  const errors = validationResult(req);
+  const developerData = await db.getDevelopers();
+  const genresData = await db.getGenres();
+  if (!errors.isEmpty()) {
+    return res.status(400).render("addGame", {
+      developers: developerData,
+      genres: genresData,
+      errors: errors.array(),
+    });
+  }
+
   try {
     const { gameName, gameGenresIds, gameDeveloperId } = req.body;
-
     await db.addGame(gameName);
     const tempGameId = await db.getLatestGameEntry();
     const gameId = tempGameId[0].id;
@@ -79,6 +93,7 @@ async function editGameRouterGet(req, res) {
       genres: genres,
       developers: developers,
       gameDeveloperIds: gameDeveloperIds,
+      errors: [],
     });
   } catch (err) {
     console.error("Error:", err);
@@ -87,10 +102,35 @@ async function editGameRouterGet(req, res) {
 }
 
 async function editGameRouterPost(req, res) {
+  const errors = validationResult(req);
+  const developerData = await db.getDevelopers();
+  const genresData = await db.getGenres();
+
+  if (!errors.isEmpty()) {
+    return res.status(400).render("editGame", {
+      developers: developerData,
+      genres: genresData,
+      errors: errors.array(),
+      game: await db.getSingleGame(req.params.id),
+      gameGenresIds: await db.getGameGenresIds(req.params.id),
+      gameDeveloperIds: await db.getGameDevelopersIds(req.params.id),
+    });
+  }
+
   try {
     const { gameName, gameGenresIds, gameDeveloperId } = req.body;
     const gameId = req.params.id;
-    await db.editGameEntry(gameId, gameName, gameGenresIds, gameDeveloperId);
+
+    const sanitizedGenresIds = Array.isArray(gameGenresIds)
+      ? gameGenresIds
+      : [];
+
+    await db.editGameEntry(
+      gameId,
+      gameName,
+      sanitizedGenresIds,
+      gameDeveloperId
+    );
     res.redirect("/games");
   } catch (err) {
     console.error("Error:", err);

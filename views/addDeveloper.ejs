@@ -24,8 +24,21 @@
           type="text"
           placeholder="Enter developer name"
         />
-        <br>
-        <button type="submit" class="form-submit-button button big-submit-button">Add</button>
+
+        <br />
+        <button
+          type="submit"
+          class="form-submit-button button big-submit-button"
+        >
+          Add
+        </button>
+        <% if (errors && errors.length > 0) { %>
+        <ul>
+          <% errors.forEach(function(error) { %>
+          <li class="error-message"><%= error.msg %></li>
+          <% }) %>
+        </ul>
+        <% } %>
       </form>
     </main>
   </body>

@@ -69,6 +69,13 @@
           <a class="form-submit-button small-spacing-vertical" href="/games">
             Cancel
           </a>
+          <% if (errors && errors.length > 0) { %>
+            <ul>
+              <% errors.forEach(function(error) { %>
+              <li class="error-message"><%= error.msg %></li>
+              <% }) %>
+            </ul>
+            <% } %>
         </div>
       </form>
     </main>

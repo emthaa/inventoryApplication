@@ -28,7 +28,7 @@ header > a {
   font-size: 24px;
 }
 
-.headerLinks:hover{
+.headerLinks:hover {
   color: rgb(190, 190, 190);
 }
 
@@ -47,12 +47,11 @@ main {
   text-decoration: none;
   border-radius: 4px;
   border: 1px solid white;
-  
 }
 
-.cardButton:hover{
+.cardButton:hover {
   background-color: #131313;
-  color:rgb(240, 240, 240)
+  color: rgb(240, 240, 240);
 }
 
 .item-list {
@@ -62,71 +61,76 @@ main {
   margin-top: 20px;
 }
 
-.add-item-button ,.form-submit-button{
-    display: inline-block;
-    padding: 10px 32px;
-    background-color: #000000;
-    color: rgb(255, 255, 255);
-    text-align: center;
-    text-decoration: none;
-    border-radius: 4px;
-    border: 4px solid rgb(255, 255, 255);
+.add-item-button,
+.form-submit-button {
+  display: inline-block;
+  padding: 10px 32px;
+  background-color: #000000;
+  color: rgb(255, 255, 255);
+  text-align: center;
+  text-decoration: none;
+  border-radius: 4px;
+  border: 4px solid rgb(255, 255, 255);
 }
 
-.add-item-button:hover,.form-submit-button:hover{
+.add-item-button:hover,
+.form-submit-button:hover {
   background-color: #131313;
-  color:rgb(240, 240, 240);
+  color: rgb(240, 240, 240);
   cursor: pointer;
 }
 
-.deletion-form{
+.deletion-form {
   display: flex;
   align-items: center;
   flex-direction: column;
 }
 
-.deletion-warning{
+.deletion-warning {
   font-weight: bolder;
   color: white;
 }
 
-#edit-game-button{
+#edit-game-button {
   margin-bottom: 8px;
 }
 
-.add-item-form,.edit-game-form{
+.add-item-form,
+.edit-game-form {
   display: flex;
   align-items: center;
   flex-direction: column;
   width: 275px;
 }
 
-.selection-boxes{
+.selection-boxes {
   width: 100%;
 }
 
-.add-item-title{
+.add-item-title {
   font-size: 22px;
   font-weight: bold;
   text-align: center;
   width: 100%;
-  display:block;
+  display: block;
 }
 
-.add-item-box{
+.add-item-box {
   height: 30px;
   font-size: 13px;
   width: 100%;
   padding: 0px;
 }
 
-.add-item-title-wrapper,.enter-game-name-wrapper{
+.add-item-title-wrapper,
+.enter-game-name-wrapper {
   display: flex;
   flex-direction: column;
   width: 100%;
 }
 
-.add-developer-wrapper ,.edit-game-wrapper-bottom{
+.add-developer-wrapper,
+.edit-game-wrapper-bottom {
   margin-top: 10px;
   margin-bottom: 10px;
   width: 100%;
@@ -134,41 +138,45 @@ main {
   flex-direction: column;
 }
 
-.add-item-bottom{
+.add-item-bottom {
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
 }
 
-.no-link-box{
+.no-link-box {
   display: inline-block;
-    padding: 12px 36px;
-    background-color: #000000;
-    color: rgb(255, 255, 255);
-    text-align: center;
-    text-decoration: none;
-    border-radius: 4px;
+  padding: 12px 36px;
+  background-color: #000000;
+  color: rgb(255, 255, 255);
+  text-align: center;
+  text-decoration: none;
+  border-radius: 4px;
 }
 
-.home-intro-games{
-  display:flex;
+.home-intro-games {
+  display: flex;
   flex-direction: column;
 }
 
-.home-intro-or{
+.home-intro-or {
   text-align: center;
 }
 
-.small-spacing-vertical{
+.small-spacing-vertical {
   margin-top: 10px;
   margin-bottom: 10px;
 }
 
-.home-explanation{
+.home-explanation {
   text-align: center;
 }
 
-.big-submit-button{
+.big-submit-button {
   width: 100%;
+}
+
+.error-message {
+  color: red;
 }

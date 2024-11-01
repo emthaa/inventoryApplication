@@ -1,4 +1,5 @@
 const db = require("../db/queries");
+const { validationResult } = require("express-validator");
 
 async function developersRouterGet(req, res) {
   try {
@@ -27,14 +28,21 @@ async function singleDeveloperRouterGet(req, res) {
 
 async function addDeveloperRouterGet(req, res) {
   try {
-    res.render("addDeveloper");
+    res.render("addDeveloper", { errors: [] });
   } catch (err) {
-    console.error("Error adding game:", err);
+    console.error("Error adding developer:", err);
     res.status(500).send("Internal Server Error");
   }
 }
 
 async function addDeveloperRouterPost(req, res) {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).render("addDeveloper", {
+      errors: errors.array(),
+    });
+  }
+
   try {
     const { developerName } = req.body;
     await db.addDeveloper(developerName);

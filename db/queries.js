@@ -59,12 +59,35 @@ async function getSingleDeveloper(developer_id) {
   return rows;
 }
 
+async function getSingleDeveloperByName(developer_name) {
+  const result = await pool.query(
+    "SELECT * FROM developers WHERE LOWER(name) = LOWER($1)",
+    [developer_name]
+  );
+  return result.rows;
+}
+
+async function getSingleGenreByName(genre_name) {
+  const result = await pool.query(
+    "SELECT * FROM genres WHERE LOWER(name) = LOWER($1)",
+    [genre_name]
+  );
+  return result.rows;
+}
+
 async function getGameDevelopersIds(game_id) {
   const { rows } = await pool.query(
     `SELECT * FROM game_developers WHERE game_id = $1`,
     [game_id]
   );
   return rows;
+}
+async function getSingleGameByName(game_name) {
+  const result = await pool.query(
+    "SELECT * FROM games WHERE LOWER(name) = LOWER($1)",
+    [game_name]
+  );
+  return result.rows;
 }
 
 async function getGameDevelopers(game_id) {
@@ -202,9 +225,12 @@ module.exports = {
   getSingleGame,
   getGameGenres,
   getGameDevelopers,
+  getSingleGameByName,
   getGenres,
   getDevelopers,
   getDeveloperGames,
+  getSingleDeveloperByName,
+  getSingleGenreByName,
   getGenreGames,
   addGenre,
   addDeveloper,
